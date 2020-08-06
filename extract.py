@@ -66,7 +66,7 @@ if(path.exists("table-1.csv")):
 			new_line.append(j)
 		table1_lines[i]=new_line
 """from file: table-2.csv"""
-if(path.exists("table-1.csv")):
+if(path.exists("table-2.csv")):
 	table2_exists=True
 	table2=open("table-2.csv","r")
 	table2_lines=table2.readlines()
