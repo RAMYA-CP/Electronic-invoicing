@@ -1,4 +1,3 @@
-import re
 import os.path
 from os import path
 import csv
@@ -6,7 +5,9 @@ import pandas as pd
 import re
 import pkg_resources
 import requests
+import re
 from symspellpy.symspellpy import SymSpell, Verbosity  # its a spell check library
+print(re)
 max_edit_distance_dictionary = 2
 prefix_length = 7
 # create object
@@ -409,7 +410,7 @@ we have to search rawText since keyvalues and tables don't have it
 
 """
 
-def wh_amount_txt(list_of_words,text_file_lines,text_file_total_txt):
+def wh_amount_txt(list_of_words,text_file_lines,text_file_total_txt,re):
 	for i in text_file_lines:
 		if 'INR' in i:
 			
@@ -557,7 +558,7 @@ def wh_amount_txt(list_of_words,text_file_lines,text_file_total_txt):
 			
 
 	
-wh_amount=wh_amount_txt(list_of_words,text_file_lines,text_file_total_txt)
+wh_amount=wh_amount_txt(list_of_words,text_file_lines,text_file_total_txt,re)
 print("Total Invoice amount entered by WH operator",wh_amount)
 seller_info.update({"Total Invoice amount entered by WH operator":wh_amount})
 """
@@ -924,7 +925,7 @@ INvoice 1-
 	find that occurence in that headings column
 	add all the values below it to a list of SGST values	
 """
-def sgst_csv(list_of_words, table1_lines, table2_exists, table2_lines):
+def sgst_csv(list_of_words, text_file_lines, table1_lines, table2_exists, table2_lines):
 	rate_candidates=dict()
 	count=1
 	"""for loop below is to find the word rate and rank them in order of their occurence"""
@@ -980,7 +981,7 @@ def sgst_csv(list_of_words, table1_lines, table2_exists, table2_lines):
 	
 	
 
-sgst_rates=sgst_csv(list_of_words,table1_lines,table2_exists, table2_lines)
+sgst_rates=sgst_csv(list_of_words,text_file_lines,table1_lines,table2_exists, table2_lines)
 print("SGST %: ",sgst_rates)
 """
 CGST %
@@ -1001,7 +1002,7 @@ INvoice 1-
 	find that occurence in that headings column
 	add all the values below it to a list of SGST values	
 """
-def cgst_csv(list_of_words, table1_lines, table2_exists, table2_lines):
+def cgst_csv(list_of_words,text_file_lines, table1_lines, table2_exists, table2_lines):
 	rate_candidates=dict()
 	count=1
 	"""for loop below is to find the word rate and rank them in order of their occurence"""
@@ -1057,7 +1058,7 @@ def cgst_csv(list_of_words, table1_lines, table2_exists, table2_lines):
 	
 	
 
-cgst_rates=cgst_csv(list_of_words,table1_lines,table2_exists, table2_lines)
+cgst_rates=cgst_csv(list_of_words,text_file_lines,table1_lines,table2_exists, table2_lines)
 print("CGST %: ",cgst_rates)
 """
 """
@@ -1140,7 +1141,7 @@ def get_headers(text_file_lines,table1_exists,df_table1,table2_exists,df_table2)
                         except:
                                 print("")
 get_headers(text_file_lines,table1_exists,df_table1,table2_exists,df_table2)
-def table_content(df_table1,table2_exists,df_table2):
+def table_content(df_table1,table2_exists,df_table2,sym_spell,pd):
     l=[i.lower().strip(' ') for i in df_table1.columns]
     cols_name=dict()
     # max edit distance per lookup (per single word, not per whole input string)
@@ -1171,20 +1172,19 @@ def table_content(df_table1,table2_exists,df_table2):
                     if(i not in df_table1.columns):
                             df_table1[i]=[pd.NA for k in range(len(df_table1))]
     return df_table1
-df_table1=table_content(df_table1,table2_exists,df_table2)
+df_table1=table_content(df_table1,table2_exists,df_table2,sym_spell,pd)
 no_of_rows=len(df_table1)
-total.extend([pd.NA for i in range(no_of_rows-len(total))])
-discounts.extend([pd.NA for i in range(no_of_rows-len(discounts))])
-cgst_rates.extend([pd.NA for i in range(no_of_rows-len(cgst_rates))])
-igst_rates.extend([pd.NA for i in range(no_of_rows-len(igst_rates))])
-sgst_rates.extend([pd.NA for i in range(no_of_rows-len(sgst_rates))])
+total.extend(['' for i in range(no_of_rows-len(total))])
+discounts.extend(['' for i in range(no_of_rows-len(discounts))])
+cgst_rates.extend(['' for i in range(no_of_rows-len(cgst_rates))])
+igst_rates.extend(['' for i in range(no_of_rows-len(igst_rates))])
+sgst_rates.extend(['' for i in range(no_of_rows-len(sgst_rates))])
 df=pd.DataFrame({"Total":total,"Discount":discounts,"CGST Rates":cgst_rates,"IGST Rates":igst_rates,"SGST Rates":sgst_rates})
 df_table1=df_table1.join(df)
 if('SL.no' not in df_table1.columns):
         df_table1.insert(0,'S.no',df.index+1)
 print(df_table1)
 with open('Invoice_output.csv', 'w', newline='') as file:
-    df=pd.read_csv("product_info.csv")
     writer = csv.writer(file)
     writer.writerow(["Seller ID",seller_info['Seller ID'],"Invoice Date",seller_info['Invoice Date']])
     writer.writerow(["Seller Name",seller_info['Seller Name'],"Due Date",seller_info['Due Date']])
