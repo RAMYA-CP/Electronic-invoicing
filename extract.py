@@ -1184,6 +1184,6 @@ if('SL.no' not in df_table1.columns):
 print(df_table1)
 sel_csv=pd.DataFrame()
 sel_csv=sel_csv.append(seller_info,ignore_index=True)
-sel_csv.to_csv("Invoice_info.csv")
-df_table1.to_csv("Invoice_info.csv")
+sel_csv.to_csv("Seller_info.csv")
+df_table1.to_csv("Product_info.csv")
 print(df_table1)
