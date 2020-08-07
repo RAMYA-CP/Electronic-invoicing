@@ -1,6 +1,7 @@
 import re
 import os.path
 from os import path
+import csv
 import pandas as pd
 import re
 import pkg_resources
@@ -820,7 +821,7 @@ def round_off(wh_amount):
 	return decimal
 decimal=round_off(wh_amount)
 print("Round off charges:",decimal)
-seller_info.update({"Round off charges:":decimal})
+seller_info.update({"Round off charges":decimal})
 ################################################
 """return the word that has 'PO' in it
 remove any part of the sring that is not a number or alphabet"""
@@ -840,7 +841,7 @@ def po_number_txt(list_of_words):
 	return candidates[0]
 po_number=po_number_txt(list_of_words)
 print("PO Number: ",po_number)
-seller_info.update({"PO Number: ":po_number})
+seller_info.update({"PO Number":po_number})
 ################################################
 """invoice amt without decimal"""
 def invoice_amt_txt(wh_amount):
@@ -856,7 +857,7 @@ def invoice_amt_txt(wh_amount):
 	return invoice_amt
 invoice_amt=invoice_amt_txt(wh_amount)
 print("invoice amount:",invoice_amt)
-seller_info.update({"invoice amount:":invoice_amt})
+seller_info.update({"invoice amount":invoice_amt})
 ###############################################
 """invoice total quantity
 """
@@ -864,7 +865,7 @@ def invoice_qty_txt(wh_qty):
 	return wh_qty
 invoice_qty=invoice_qty_txt(wh_qty)
 print("invoice qty: ",invoice_qty)
-seller_info.update({"invoice qty: ":invoice_qty})
+seller_info.update({"invoice qty":invoice_qty})
 ###########################
 """print the value of gstin"""
 def gstin_txt(keys,values):
@@ -874,7 +875,7 @@ def gstin_txt(keys,values):
 			return gstin
 gstin=gstin_txt(keys,values)
 print("gstin:",gstin)
-seller_info.update({"gstin:":gstin})
+seller_info.update({"gstin":gstin})
 ##################################
 """
 Discount:
@@ -1182,10 +1183,18 @@ df_table1=df_table1.join(df)
 if('SL.no' not in df_table1.columns):
         df_table1.insert(0,'S.no',df.index+1)
 print(df_table1)
-sel_csv=pd.DataFrame()
-sel_csv=sel_csv.append(seller_info,ignore_index=True)
-print(seller_info)
-sel_csv.to_csv("seller_info.csv",index=False)
-
-df_table1.to_csv("Product_info.csv",index=False)
-print(df_table1)
+with open('Invoice_output.csv', 'w', newline='') as file:
+    df=pd.read_csv("product_info.csv")
+    writer = csv.writer(file)
+    writer.writerow(["Seller ID",seller_info['Seller ID'],"Invoice Date",seller_info['Invoice Date']])
+    writer.writerow(["Seller Name",seller_info['Seller Name'],"Due Date",seller_info['Due Date']])
+    writer.writerow(["Seller Address",seller_info['Seller Address'],"Total Invoice amount entered by WH operator", seller_info['Total Invoice amount entered by WH operator']])
+    writer.writerow(["Seller GSTIN Number",seller_info['Seller GSTIN Number'],"Total TCS collected by WH operator", seller_info['Total TCS collected by WH operator']])
+    writer.writerow(["Country of Origin",seller_info['Country of Origin'],"Round off charges", seller_info['Round off charges']]) 
+    writer.writerow(["Currency",seller_info['Currency'],"PO Number", seller_info['PO Number']]) 
+    writer.writerow(["Description",seller_info['Description'],"Invoice Items Total Amount", seller_info['invoice amount']]) 
+    writer.writerow(["","","Invoice Items total quantity", seller_info['invoice qty']]) 
+    writer.writerow(["","","Buyer GSTIN Number", seller_info['gstin']+'\n'])
+    writer.writerow(df_table1)
+    for index,row in df_table1.iterrows():
+            writer.writerow(row)
