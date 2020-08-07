@@ -1180,7 +1180,6 @@ if('SL.no' not in df_table1.columns):
         df_table1.insert(0,'S.no',df.index+1)
 print(df_table1)
 with open('Invoice_output.csv', 'w', newline='') as file:
-    df=pd.read_csv("product_info.csv")
     writer = csv.writer(file)
     writer.writerow(["Seller ID",seller_info['Seller ID'],"Invoice Date",seller_info['Invoice Date']])
     writer.writerow(["Seller Name",seller_info['Seller Name'],"Due Date",seller_info['Due Date']])
