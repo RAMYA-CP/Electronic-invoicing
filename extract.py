@@ -1180,7 +1180,7 @@ sgst_rates.extend([pd.NA for i in range(no_of_rows-len(sgst_rates))])
 df=pd.DataFrame({"Total":total,"Discount":discounts,"CGST Rates":cgst_rates,"IGST Rates":igst_rates,"SGST Rates":sgst_rates})
 df_table1=df_table1.join(df)
 if('SL.no' not in df_table1.columns):
-        df_table1.insert(1,'S.no',df.index+1)
+        df_table1.insert(0,'S.no',df.index+1)
 print(df_table1)
 sel_csv=pd.DataFrame()
 sel_csv=sel_csv.append(seller_info,ignore_index=True)
