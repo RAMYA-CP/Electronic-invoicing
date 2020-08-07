@@ -149,7 +149,7 @@ if(path.exists("table-5.csv")):
 		table5_lines[i]=new_line
 df=pd.read_csv('keyValues.csv')
 seller_info={"Seller State":"","Seller ID":"","Seller Name":"","Seller Address":"","Seller GSTIN Number":"","Country of Origin":"","Currency":"","Description":""}
-def seller_state(df):
+def seller_state(df,seller_info):
     df=df.drop_duplicates()
     for i in df.index:
         if(isinstance(df['key'][i],str)):
@@ -171,7 +171,7 @@ def seller_state(df):
                     if(description.find("place of supply")!=-1):
                         seller_info.update({"Seller State":description.split("place of supply",1)[1]})
                         break
-def seller_id(text_file_lines):
+def seller_id(text_file_lines,seller_info):
     for i in text_file_lines:
         i=i.lower()
         if('cin' in i):
@@ -185,7 +185,7 @@ def seller_id(text_file_lines):
                     print("Seller ID:",i.split(":")[1].replace("\n",'').strip(' ').strip("-"))
                     seller_info.update({"Seller ID":i.split(".")[1].replace("\n",'').strip(' ').strip("-")})
             break
-def seller_gst(text_file_lines):
+def seller_gst(text_file_lines,seller_info):
     nxt_line=0
     for i in text_file_lines:
         i=i.lower()
@@ -220,7 +220,7 @@ def seller_gst(text_file_lines):
                     break
                 else:
                     nxt_line=1
-def currency(text_file_lines):
+def currency(text_file_lines,seller_info):
     for i in text_file_lines:
         i=i.lower()
         if("currency" in i):
@@ -237,7 +237,7 @@ def currency(text_file_lines):
             print("Currency: USD")
             seller_info.update({"Currency":"USD"})
             break
-def country_of_origin(text_file_lines):
+def country_of_origin(text_file_lines,seller_info):
     f=1
     dict_of_currencies={'INR':'INDIA','USD':'USA'}
     for i in text_file_lines:
@@ -255,24 +255,25 @@ def country_of_origin(text_file_lines):
             seller_info.update({"Country of Origin":dict_of_currencies[seller_info['Currency']]})
     except:
             print("")
-def address(text_file_lines):
+def address(text_file_lines,seller_info):
     for i in text_file_lines:        
         if(i.count(",")>1):
             print("Seller Address:",i.strip("\n"))
             seller_info.update({"Seller Address":i.strip("\n")})
             break
-seller_id(text_file_lines)
-seller_gst(text_file_lines)
-currency(text_file_lines)
-country_of_origin(text_file_lines)
-address(text_file_lines)
-seller_state(df)
+seller_id(text_file_lines,seller_info)
+seller_gst(text_file_lines,seller_info)
+currency(text_file_lines,seller_info)
+country_of_origin(text_file_lines,seller_info)
+address(text_file_lines,seller_info)
+seller_state(df,seller_info)
 """
 Problem number 1: finding the invoice number
 Case 1: When the invoice number is present in the keyValue pair file
 	becomes very easy
 	simply extract the value from the file
 Case 2: When it is NOT in the keyValue file:
+
 let all the candidates for invoice_number be stored in invoice_number_cand
 Check #1: Must be a number
 Check #2: Must not be a single digit number
@@ -282,6 +283,7 @@ search for the line in which key word appears
 find difference between the two lines
 in case of multiple occurences, retain smaller distance
 print the ones with the least distance
+
 """
 invoice_number_cand=dict()
 def invoice_number_txt(text_file_lines,list_of_words,invoice_number_cand):
@@ -404,6 +406,7 @@ step #4: search for the numeric closest to the text 'total invoic'-> v. complica
 step #5: remove everything that does not have a decimal point
 step #6: any number that starts with 0, obviously doesnt qualify
 we have to search rawText since keyvalues and tables don't have it
+
 """
 
 def wh_amount_txt(list_of_words,text_file_lines,text_file_total_txt):
@@ -880,6 +883,7 @@ everything below the heading that has the words 'Disc'
 everything with numbers gets appended
 invoice 1 doesn't have this heading- it has '1%)'
 so i added a constraint saying that even if '%' is in the heading i will print everything below it
+
 """
 def discount(table1_lines):
 	headings=table1_lines[0]
@@ -1180,6 +1184,7 @@ if('SL.no' not in df_table1.columns):
         df_table1.insert(0,'S.no',df.index+1)
 print(df_table1)
 with open('Invoice_output.csv', 'w', newline='') as file:
+    df=pd.read_csv("product_info.csv")
     writer = csv.writer(file)
     writer.writerow(["Seller ID",seller_info['Seller ID'],"Invoice Date",seller_info['Invoice Date']])
     writer.writerow(["Seller Name",seller_info['Seller Name'],"Due Date",seller_info['Due Date']])
