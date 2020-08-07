@@ -1,0 +1,13 @@
+String document="input.png";
+String bucket="bucket";
+
+AmazonTextract client = AmazonTextractClientBuilder.defaultClient();
+
+DetectDocumentTextRequest request = new DetectDocumentTextRequest()
+        .withDocument(new Document()
+                .withS3Object(new S3Object()
+                        .withName(document)
+                        .withBucket(bucket)));
+
+DetectDocumentTextResult result = client.detectDocumentText(request);
+

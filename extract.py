@@ -1,26 +1,6 @@
 import re
 import os.path
 from os import path
-import csv
-import pandas as pd
-import re
-import pkg_resources
-import requests
-from symspellpy.symspellpy import SymSpell, Verbosity  # its a spell check library
-max_edit_distance_dictionary = 2
-prefix_length = 7
-# create object
-sym_spell = SymSpell(max_edit_distance_dictionary, prefix_length)
-# load dictionary
-dictionary_path = pkg_resources.resource_filename("symspellpy", "frequency_dictionary_en_82_765.txt")
-bigram_path = pkg_resources.resource_filename("symspellpy", "frequency_bigramdictionary_en_243_342.txt")
-# term_index is the column of the term and count_index is the
-# column of the term frequency
-if not sym_spell.load_dictionary(dictionary_path, term_index=0,count_index=1):
-        print("Dictionary file not found")
-if not sym_spell.load_bigram_dictionary(bigram_path, term_index=0,count_index=2):
-        print("Bigram dictionary file not found")
-
 table1_exists=None
 table2_exists=None
 table3_exists=None
@@ -31,8 +11,6 @@ table2_lines=None
 table3_lines=None
 table4_lines=None
 table5_lines=None
-df_table1=None
-df_table2=None
 
 """
 From the file: rawText.txt
@@ -76,10 +54,10 @@ for i in range(0,len(keys)):
 table1_exists=False
 table2_exists=False
 if(path.exists("table-1.csv")):
-	df_table1=pd.read_csv('table-1.csv')
 	table1_exists=True
-	table1=open("table-1.csv")
+	table1=open("table-1.csv","r")
 	table1_lines=table1.readlines()
+	
 	for i in range(0,len(table1_lines)):
 		line=table1_lines[i].split("\",")
 		new_line=[]
@@ -89,9 +67,8 @@ if(path.exists("table-1.csv")):
 		table1_lines[i]=new_line
 """from file: table-2.csv"""
 if(path.exists("table-2.csv")):
-	df_table2=pd.read_csv('table-2.csv')
 	table2_exists=True
-	table2=open("table-2.csv")
+	table2=open("table-2.csv","r")
 	table2_lines=table2.readlines()
 	#print(table2_lines)
 	for i in range(0,len(table2_lines)):
@@ -100,12 +77,12 @@ if(path.exists("table-2.csv")):
 		for j in line:
 			j=j[1:len(j)-1]
 			new_line.append(j)
-		table2_lines[i]=new_line		
+		table2_lines[i]=new_line
+		
 """from file: table-3.csv"""
 if(path.exists("table-3.csv")):
 	table3_exists=True
-	df_table3=pd.read_csv('table-3.csv')
-	table3=open("table-3.csv")
+	table3=open("table-3.csv","r")
 	table3_lines=table3.readlines()
 	#print(table2_lines)
 	for i in range(0,len(table3_lines)):
@@ -124,7 +101,6 @@ if(path.exists("table-4.csv")):
 	table4=open("table-4.csv","r")
 	table4_lines=table4.readlines()
 	#print(table2_lines)
-	df_table4=pd.read_csv('table-4.csv')
 	for i in range(0,len(table4_lines)):
 		line=table4_lines[i].split("\",")
 		new_line=[]
@@ -136,10 +112,9 @@ if(path.exists("table-4.csv")):
 """from file: table-5.csv"""
 if(path.exists("table-5.csv")):
 	table5_exists=True
-	table5=open("table-5.csv")
+	table5=open("table-5.csv","r")
 	table5_lines=table5.readlines()
 	#print(table2_lines)
-	df_table5=pd.read_csv('table-5.csv')
 	for i in range(0,len(table5_lines)):
 		line=table5_lines[i].split("\",")
 		new_line=[]
@@ -147,127 +122,8 @@ if(path.exists("table-5.csv")):
 			j=j[1:len(j)-1]
 			new_line.append(j)
 		table5_lines[i]=new_line
-df=pd.read_csv('keyValues.csv')
-seller_info={"Seller State":"","Seller ID":"","Seller Name":"","Seller Address":"","Seller GSTIN Number":"","Country of Origin":"","Currency":"","Description":""}
-def seller_state(df):
-    df=df.drop_duplicates()
-    for i in df.index:
-        if(isinstance(df['key'][i],str)):
-                description=df['key'][i].lower()
-                if(description.find("place of supply")!=-1):
-                    if(df['value'][i]==""):
-                            print("Seller state:",df['value'][i])
-                            seller_info.update({"Seller State":df['value'][i]})
-                            break
-                    else:
-                            i+=1
-                            description=df['key'][i].lower()
-                            if(description.find("state")!=-1):
-                                    print("Seller state:",df['value'][i])
-                                    seller_info.update({"Seller State":df['value'][i]})
-                                    break
-                elif(isinstance(df['value'][i],str)):
-                    description=df['value'][i].lower()
-                    if(description.find("place of supply")!=-1):
-                        seller_info.update({"Seller State":description.split("place of supply",1)[1]})
-                        break
-def seller_id(text_file_lines):
-    for i in text_file_lines:
-        i=i.lower()
-        if('cin' in i):
-            found=i.find(":")
-            if(found!=-1):
-                print("Seller ID:",i.split(":")[1].replace("\n",'').strip(' ').strip("-"))
-                seller_info.update({"Seller ID":i.split(":")[1].replace("\n",'').strip(' ').strip("-")})
-            else:
-                found=i.find(".")
-                if(found!=-1):
-                    print("Seller ID:",i.split(":")[1].replace("\n",'').strip(' ').strip("-"))
-                    seller_info.update({"Seller ID":i.split(".")[1].replace("\n",'').strip(' ').strip("-")})
-            break
-def seller_gst(text_file_lines):
-    nxt_line=0
-    for i in text_file_lines:
-        i=i.lower()
-        if(nxt_line):
-            Gst_no=i.strip("\n").strip(" ")
-            if(Gst_no.isalnum() and len(Gst_no)==15):
-                print("Seller GSTIN Number:",Gst_no.replace("-",""))
-                seller_info.update({"Seller GSTIN Number":Gst_no.replace("-","")})
-            break
-        if('gst' in i):
-            found=i.find(":")
-            if(found!=-1):
-                Gst_no=i.split(":")[1].strip("\n").strip(" ")
-                if(len(Gst_no)!=15):
-                    Gst_no=Gst_no.split(" ")
-                    for k in range(len(Gst_no)):
-                        Gstin=Gst_no[k]
-                        if(len(Gstin)==15):
-                            Gst_no=Gstin
-                            break
-                if(Gst_no.isalnum() and len(Gst_no)==15):
-                    print("Seller GSTIN Number:",Gst_no.replace("-",""))
-                    seller_info.update({"Seller GSTIN Number":Gst_no.replace("-","")})
-                break
-            else:
-                found=i.find(".")
-                if(found!=-1):
-                    Gst_no=i.split(".")[1].strip("\n").strip(" ")
-                    if(Gst_no.isalnum() and len(Gst_no)==15):
-                        print("Seller GSTIN Number:",Gst_no.replace("-",""))
-                        seller_info.update({"Seller GSTIN Number":Gst_no.replace("-","")})
-                    break
-                else:
-                    nxt_line=1
-def currency(text_file_lines):
-    for i in text_file_lines:
-        i=i.lower()
-        if("currency" in i):
-            found=i.find(":")
-            if(found!=-1):
-                print("Currency:",i.split(":")[1].strip(" ").strip("-").replace("\n",""))
-                seller_info.update({"Currency":i.split(":")[1].strip(" ").strip("-").replace("\n","")})
-                break
-        if(("inr" in i) or ("rupees" in i) or("paise")):
-            print("Currency: INR")
-            seller_info.update({"Currency":"INR"})
-            break
-        if(("usd" in i) or ("dollars" in i)):
-            print("Currency: USD")
-            seller_info.update({"Currency":"USD"})
-            break
-def country_of_origin(text_file_lines):
-    f=1
-    dict_of_currencies={'INR':'INDIA','USD':'USA'}
-    for i in text_file_lines:
-        i=i.lower()
-        if("country of origin" in i):
-            found=i.find(":")
-            if(found!=-1):
-                print("Country of Origin:",i.split(":")[1].strip(" ").strip("-").replace("\n","").replace("/",""))
-                seller_info.update({"Country of Origin":i.split(":")[1].strip(" ").strip("-").replace("\n","").replace("/","")})
-                f=0
-                break
-    try:
-        if(f):
-            print("Country of Origin:",dict_of_currencies[seller_info['Currency']])
-            seller_info.update({"Country of Origin":dict_of_currencies[seller_info['Currency']]})
-    except:
-            print("")
-def address(text_file_lines):
-    for i in text_file_lines:        
-        if(i.count(",")>1):
-            print("Seller Address:",i.strip("\n"))
-            seller_info.update({"Seller Address":i.strip("\n")})
-            break
-seller_id(text_file_lines)
-seller_gst(text_file_lines)
-currency(text_file_lines)
-country_of_origin(text_file_lines)
-address(text_file_lines)
-seller_state(df)
-"""
+		
+		"""
 Problem number 1: finding the invoice number
 Case 1: When the invoice number is present in the keyValue pair file
 	becomes very easy
@@ -345,7 +201,6 @@ if(invoice_number==None):
 
 	invoice_number=invoice_number_txt(text_file_lines,list_of_words,invoice_number_cand)
 print("The invoice number is: ",invoice_number)
-seller_info.update({"Invoice Number":invoice_number})
 
 #####################################################
 """Invoice Date
@@ -371,7 +226,6 @@ def invoice_date_csv(keys,values):
 
 invoice_date=invoice_date_csv(keys,values)
 print("The invoice date is: ",invoice_date)
-seller_info.update({"Invoice Date":invoice_date})
 ######################################################
 """Delivery Date
 Check in keyvalue pairs
@@ -395,7 +249,6 @@ due_date=due_date_csv(keys,values)
 if(due_date==None):
 	due_date=invoice_date
 print("The due date is: ",due_date)
-seller_info.update({"Due Date":due_date})
 #####################################################
 """
 total amount entered by WH operator
@@ -559,7 +412,6 @@ def wh_amount_txt(list_of_words,text_file_lines,text_file_total_txt):
 	
 wh_amount=wh_amount_txt(list_of_words,text_file_lines,text_file_total_txt)
 print("Total Invoice amount entered by WH operator",wh_amount)
-seller_info.update({"Total Invoice amount entered by WH operator":wh_amount})
 """
 Total invoice qty:
 step 1: find all integers
@@ -620,8 +472,7 @@ def qty_txt(list_of_words,table1_lines,table2_lines,table1_exists,table2_exists)
 	
 	
 wh_qty=qty_txt(list_of_words,table1_lines,table2_lines,table1_exists, table2_exists)
-print("Quantity entered by WH operator:",wh_qty)
-seller_info.update({"Quantity entered by WH operator:":wh_qty})
+print("Quantinty entered by WH operator:",wh_qty)
 
 """
 total tcs collected
@@ -809,7 +660,6 @@ def tcs_txt(list_of_words,table1_lines,table2_lines, table3_lines, table4_lines,
 
 wh_tcs=tcs_txt(list_of_words,table1_lines,table2_lines,table3_lines, table4_lines, table5_lines,table1_exists, table2_exists, table3_exists, table4_exists, table5_exists)
 print("Total TCS collected by WH operator",wh_tcs)
-seller_info.update({"Total TCS collected by WH operator":wh_tcs})
 #################################################
 """Numbers after the decimal point n the wh_amount"""
 def round_off(wh_amount):
@@ -821,7 +671,6 @@ def round_off(wh_amount):
 	return decimal
 decimal=round_off(wh_amount)
 print("Round off charges:",decimal)
-seller_info.update({"Round off charges":decimal})
 ################################################
 """return the word that has 'PO' in it
 remove any part of the sring that is not a number or alphabet"""
@@ -841,7 +690,6 @@ def po_number_txt(list_of_words):
 	return candidates[0]
 po_number=po_number_txt(list_of_words)
 print("PO Number: ",po_number)
-seller_info.update({"PO Number":po_number})
 ################################################
 """invoice amt without decimal"""
 def invoice_amt_txt(wh_amount):
@@ -857,7 +705,6 @@ def invoice_amt_txt(wh_amount):
 	return invoice_amt
 invoice_amt=invoice_amt_txt(wh_amount)
 print("invoice amount:",invoice_amt)
-seller_info.update({"invoice amount":invoice_amt})
 ###############################################
 """invoice total quantity
 """
@@ -865,7 +712,6 @@ def invoice_qty_txt(wh_qty):
 	return wh_qty
 invoice_qty=invoice_qty_txt(wh_qty)
 print("invoice qty: ",invoice_qty)
-seller_info.update({"invoice qty":invoice_qty})
 ###########################
 """print the value of gstin"""
 def gstin_txt(keys,values):
@@ -875,7 +721,6 @@ def gstin_txt(keys,values):
 			return gstin
 gstin=gstin_txt(keys,values)
 print("gstin:",gstin)
-seller_info.update({"gstin":gstin})
 ##################################
 """
 Discount:
@@ -1103,98 +948,4 @@ def total_txt(table1_lines, table2_exists, table2_lines):
 	return total
 total=total_txt(table1_lines, table2_exists, table2_lines)
 print("Total :",total)
-def get_headers(text_file_lines,table1_exists,df_table1,table2_exists,df_table2):
-        if(table1_exists):
-                l=[(i.strip("\n")).lower() for i in text_file_lines]
-                index=-1
-                if("si" in l):
-                    index=l.index("si")
-                elif("sl.no" in l):
-                    index=l.index("sl.no")
-                elif("sl no" in l):
-                    index=l.index("sl no")
-                elif("sl" in l):
-                    index=l.index("sl no")
-                if(index!=-1):
-                    i=index+1
-                    numindex=-1
-                    numcheck=1
-                    while(i<len(l) and numcheck):
-                        numindex=i
-                        if(l[i].isdigit()):
-                            numcheck=0
-                        i+=1
-                    if(numindex!=-1):
-                        no_of_columns=numindex-index-2
-                        try:
-                            last_column=df_table1.columns[len(df_table1.columns)-2]
-                            first_column=df_table1.columns[0]
-                            li=l.index(last_column.lower().strip())
-                            if(li<numindex):
-                                cols=t[li-no_of_columns+1:li+1]
-                                cols.append("")
-                                df_table1.columns=cols
-                                if(table2_exists):
-                                        if(len(df_table1)==len(df_table2)):
-                                            df_tablebleable2.columns=df_table1.columns
-                        except:
-                                print("")
-get_headers(text_file_lines,table1_exists,df_table1,table2_exists,df_table2)
-def table_content(df_table1,table2_exists,df_table2):
-    l=[i.lower().strip(' ') for i in df_table1.columns]
-    cols_name=dict()
-    # max edit distance per lookup (per single word, not per whole input string)
-    max_edit_distance_lookup = 2
-    cols=['Product code','HSN','Title','Quantity','Unit Price']
-    for i in l:
-        input_term = i
-        suggestions = sym_spell.lookup_compound(input_term,max_edit_distance_lookup)
-        for suggestion in suggestions:
-            j=suggestion.term
-        if(('material' in i) or ('product code') in i):
-            cols_name.update({df_table1.columns[l.index(i)]:cols[0]})
-        elif(('hsn' in i) or ('code'==i)):
-            cols_name.update({df_table1.columns[l.index(i)]:cols[1]})
-        elif(('description' in i) or('description' in j) or('daecripiior' in i) or('dascettion' in i)):
-            cols_name.update({df_table1.columns[l.index(i)]:cols[2]})
-        elif(('quantity' in i) or ((('qty' in i)or ('oty' in i)))):
-            cols_name.update({df_table1.columns[l.index(i)]:cols[3]})
-        elif(('Unit price' in i) or ('rate'==i) or("per unit" in i)):
-            cols_name.update({df_table1.columns[l.index(i)]:cols[4]})
-    df_table1=df_table1.rename(columns=cols_name)
-    if(len(df_table1.columns)==len(df_table2.columns)):
-        df_table2.columns=df_table1.columns
-        df_table1=pd.concat([df_table1,df_table2])
-    df_table1.drop(df_table1.columns.difference(cols),axis=1,inplace=True)
-    if(len(df_table1.columns)!=len(cols)):
-            for i in cols:
-                    if(i not in df_table1.columns):
-                            df_table1[i]=[pd.NA for k in range(len(df_table1))]
-    return df_table1
-df_table1=table_content(df_table1,table2_exists,df_table2)
-no_of_rows=len(df_table1)
-total.extend([pd.NA for i in range(no_of_rows-len(total))])
-discounts.extend([pd.NA for i in range(no_of_rows-len(discounts))])
-cgst_rates.extend([pd.NA for i in range(no_of_rows-len(cgst_rates))])
-igst_rates.extend([pd.NA for i in range(no_of_rows-len(igst_rates))])
-sgst_rates.extend([pd.NA for i in range(no_of_rows-len(sgst_rates))])
-df=pd.DataFrame({"Total":total,"Discount":discounts,"CGST Rates":cgst_rates,"IGST Rates":igst_rates,"SGST Rates":sgst_rates})
-df_table1=df_table1.join(df)
-if('SL.no' not in df_table1.columns):
-        df_table1.insert(0,'S.no',df.index+1)
-print(df_table1)
-with open('Invoice_output.csv', 'w', newline='') as file:
-    df=pd.read_csv("product_info.csv")
-    writer = csv.writer(file)
-    writer.writerow(["Seller ID",seller_info['Seller ID'],"Invoice Date",seller_info['Invoice Date']])
-    writer.writerow(["Seller Name",seller_info['Seller Name'],"Due Date",seller_info['Due Date']])
-    writer.writerow(["Seller Address",seller_info['Seller Address'],"Total Invoice amount entered by WH operator", seller_info['Total Invoice amount entered by WH operator']])
-    writer.writerow(["Seller GSTIN Number",seller_info['Seller GSTIN Number'],"Total TCS collected by WH operator", seller_info['Total TCS collected by WH operator']])
-    writer.writerow(["Country of Origin",seller_info['Country of Origin'],"Round off charges", seller_info['Round off charges']]) 
-    writer.writerow(["Currency",seller_info['Currency'],"PO Number", seller_info['PO Number']]) 
-    writer.writerow(["Description",seller_info['Description'],"Invoice Items Total Amount", seller_info['invoice amount']]) 
-    writer.writerow(["","","Invoice Items total quantity", seller_info['invoice qty']]) 
-    writer.writerow(["","","Buyer GSTIN Number", seller_info['gstin']+'\n'])
-    writer.writerow(df_table1)
-    for index,row in df_table1.iterrows():
-            writer.writerow(row)
+
