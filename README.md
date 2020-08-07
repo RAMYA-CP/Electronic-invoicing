@@ -5,7 +5,7 @@
 - analyze.py: to analyze the document, identify key-value pairs and tabular data. outputs a JSON object
 ### TO DO
 - [x] Try adding into one csv file
-- [ ] Integrate with django
+- [x] Integrate with django
 - [ ] Try the api integration
 - [ ] TRY API USING POSTMAN OR RAPID API
 - [ ] Finish the documentation and video
