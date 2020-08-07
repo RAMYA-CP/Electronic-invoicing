@@ -1,2 +1,2 @@
 # Electronic-invoicing
-extract.py: Haas the merged code 
+extract.py: Has the merged code 
