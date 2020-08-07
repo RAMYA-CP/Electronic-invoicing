@@ -251,7 +251,7 @@ def country_of_origin(text_file_lines):
     try:
         if(f):
             print("Country of Origin:",dict_of_currencies[seller_info['Currency']])
-            seller_info.update({"Country of Origin":dict_of_currencies[seller_infoo['Currency']]})
+            seller_info.update({"Country of Origin":dict_of_currencies[seller_info['Currency']]})
     except:
             print("")
 def address(text_file_lines):
@@ -1184,6 +1184,8 @@ if('SL.no' not in df_table1.columns):
 print(df_table1)
 sel_csv=pd.DataFrame()
 sel_csv=sel_csv.append(seller_info,ignore_index=True)
-sel_csv.to_csv("Seller_info.csv")
-df_table1.to_csv("Product_info.csv")
+print(seller_info)
+sel_csv.to_csv("seller_info.csv",index=False)
+
+df_table1.to_csv("Product_info.csv",index=False)
 print(df_table1)
