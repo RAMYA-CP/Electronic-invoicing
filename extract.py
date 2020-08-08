@@ -40,7 +40,7 @@ From the file: rawText.txt
 text_file_lines:has a list of lines
 list_of_words: has a list of all the words
 """
-text_file=open("rawText.txt","r")
+text_file=open("Sample_Invoice_1/rawText.txt","r")
 text_file_lines=text_file.readlines()
 text_file.seek(0)
 text_file_total_txt=text_file.read()
@@ -57,7 +57,7 @@ from the file: keyValues.csv
 keys: has a list of all the keys
 values: has a list of all the values
 """
-csv_file=open("keyValues.csv","r")
+csv_file=open("Sample_Invoice_1/keyValues.csv","r")
 csv_rows=csv_file.readlines()
 csv_file.seek(0)
 values=[]
@@ -76,10 +76,10 @@ for i in range(0,len(keys)):
 """from file: table-1.csv"""
 table1_exists=False
 table2_exists=False
-if(path.exists("table-1.csv")):
-	df_table1=pd.read_csv('table-1.csv')
+if(path.exists("Sample_Invoice_1/table-1.csv")):
+	df_table1=pd.read_csv('Sample_Invoice_1/table-1.csv')
 	table1_exists=True
-	table1=open("table-1.csv")
+	table1=open("Sample_Invoice_1/table-1.csv")
 	table1_lines=table1.readlines()
 	for i in range(0,len(table1_lines)):
 		line=table1_lines[i].split("\",")
@@ -89,10 +89,10 @@ if(path.exists("table-1.csv")):
 			new_line.append(j)
 		table1_lines[i]=new_line
 """from file: table-2.csv"""
-if(path.exists("table-2.csv")):
-	df_table2=pd.read_csv('table-2.csv')
+if(path.exists("Sample_Invoice_1/table-2.csv")):
+	df_table2=pd.read_csv('Sample_Invoice_1/table-2.csv')
 	table2_exists=True
-	table2=open("table-2.csv")
+	table2=open("Sample_Invoice_1/table-2.csv")
 	table2_lines=table2.readlines()
 	#print(table2_lines)
 	for i in range(0,len(table2_lines)):
@@ -103,10 +103,10 @@ if(path.exists("table-2.csv")):
 			new_line.append(j)
 		table2_lines[i]=new_line		
 """from file: table-3.csv"""
-if(path.exists("table-3.csv")):
+if(path.exists("Sample_Invoice_1/table-3.csv")):
 	table3_exists=True
-	df_table3=pd.read_csv('table-3.csv')
-	table3=open("table-3.csv")
+	df_table3=pd.read_csv('Sample_Invoice_1/table-3.csv')
+	table3=open("Sample_Invoice_1/table-3.csv")
 	table3_lines=table3.readlines()
 	#print(table2_lines)
 	for i in range(0,len(table3_lines)):
@@ -120,12 +120,12 @@ if(path.exists("table-3.csv")):
 
 
 """from file: table-4.csv"""
-if(path.exists("table-4.csv")):
+if(path.exists("Sample_Invoice_1/table-4.csv")):
 	table4_exists=True
-	table4=open("table-4.csv","r")
+	table4=open("Sample_Invoice_1/table-4.csv","r")
 	table4_lines=table4.readlines()
 	#print(table2_lines)
-	df_table4=pd.read_csv('table-4.csv')
+	df_table4=pd.read_csv('Sample_Invoice_1/table-4.csv')
 	for i in range(0,len(table4_lines)):
 		line=table4_lines[i].split("\",")
 		new_line=[]
@@ -135,12 +135,12 @@ if(path.exists("table-4.csv")):
 		table4_lines[i]=new_line
 		
 """from file: table-5.csv"""
-if(path.exists("table-5.csv")):
+if(path.exists("Sample_Invoice_1/table-5.csv")):
 	table5_exists=True
-	table5=open("table-5.csv")
+	table5=open("Sample_Invoice_1/table-5.csv")
 	table5_lines=table5.readlines()
 	#print(table2_lines)
-	df_table5=pd.read_csv('table-5.csv')
+	df_table5=pd.read_csv('Sample_Invoice_1/table-5.csv')
 	for i in range(0,len(table5_lines)):
 		line=table5_lines[i].split("\",")
 		new_line=[]
@@ -148,7 +148,7 @@ if(path.exists("table-5.csv")):
 			j=j[1:len(j)-1]
 			new_line.append(j)
 		table5_lines[i]=new_line
-df=pd.read_csv('keyValues.csv')
+df=pd.read_csv('Sample_Invoice_1/keyValues.csv')
 seller_info={"Seller State":"","Seller ID":"","Seller Name":"","Seller Address":"","Seller GSTIN Number":"","Country of Origin":"","Currency":"","Description":""}
 def seller_state(df,seller_info):
     df=df.drop_duplicates()
