@@ -4,7 +4,6 @@ from django.http import HttpResponse
 import csv
 import os
 
-
 # Create your views here.
 def upload(request):
     if request.method == 'POST' and request.FILES['myfile']:
@@ -28,5 +27,3 @@ def download(request):
         response = HttpResponse(myfile, content_type='text/csv')
         response['Content-Disposition'] = 'attachment; filename=Invoice_output.csv'
         return response
-
-    
