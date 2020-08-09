@@ -1,0 +1,22 @@
+Seller ID,a10002aa1710alb00199,Invoice Date,1/7/2017
+Seller Name,,Due Date,1/7/2017
+Seller Address,"VirtualAddr, 255.0.0.0, India",Total Invoice amount entered by WH operator,15192.40
+Seller GSTIN Number,17abcdef123gxyz,Total TCS collected by WH operator,723.52
+Country of Origin,INDIA,Round off charges,.40
+Currency,INR,PO Number,PO1234567
+Description,,Invoice Items Total Amount,15192
+,,Invoice Items total quantity,19
+,,Buyer GSTIN Number,"-07AABBC8888G1AZ1 
+"
+S.no,Title,HSN,Quantity,Unit Price,Product code,Total,Discount,CGST Rates,IGST Rates,SGST Rates
+1,Dummy product for evaluation ,6203.0,2IPC ,1523.04,nan,1599.20,0.00,2.50,<NA>,2.50
+2,Dummy product for evaluason ,6203.0,2 PC ,1523.04,nan,1599.20,0.00,2.50,<NA>,2.50
+3,Dummy product for evaluation ,6203.0,2PC ,1523.04,nan,3599.20,0.00,2.50,<NA>,2.50
+4,Dummy product for evaluation ,6203.0,2PO ,1523.04,nan,3599.20,0.00,2.50,<NA>,2.50
+5,Dumney product for evaluation ,6203.0,2lPc ,1523.04,nan,1599.20,0.00,2.50,<NA>,2.50
+6,Total ,nan,19 ,nan,nan,1599.20,0.00,2.50,<NA>,2.50
+7,Dummy product for evaluation ,6203.0,2PC ,1523.04,nan,1599.20,0.00,2.50,<NA>,2.50
+8,Dummy product for evaluation ,6203.0,2PC ,1523.04,nan,1599.20,0.00,2.50,<NA>,2.50
+9,Dummy product for evaluation ,6203.0,2PC ,1523.04,nan,1599.20,0.00,2.50,<NA>,2.50
+10,Durmy product for evaluaton ,6203.0,IPC ,1523.04,nan,1599.20,0.00,2.50,<NA>,2.50
+11,Dummy productfor evaluation ,6203.0,1 IPC ,761.52,nan,799.60,<NA>,2.50,<NA>,2.50
