@@ -4,6 +4,6 @@
 - detect.py: to detect the text in the document using textract. outputs a JSON object
 - analyze.py: to analyze the document, identify key-value pairs and tabular data. outputs a JSON object
 ### TO DO
-- [ ] UI DECORATION 
-- [ ] DOCUMENTATION APPLICATION PART
+- [x] UI DECORATION 
+- [x] DOCUMENTATION APPLICATION PART
 - [ ] VIDEO
