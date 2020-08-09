@@ -1,0 +1,451 @@
+
+irtualCompanyind
+Page 1 of 3
+VirtualAddr. 255.0.0.0. India
+Telephone: nailzabc@gmail com
+GSTN No: 17ABCDEF123GXYZ PAN No:AAABB9990A
+CIN:A10002AA1710ALB00199
+Tax Invoice
+Original for Recipient
+Bal To 1700235
+Ship Tor 1700234
+Transporter Name
+SAFEXPRESS PRIVATE
+Invoice No (OONI:
+Customer Name: RECIEVER COMPANYIND
+Customer Name: RECIEVER COMPANYIND
+LR Number:
+1234
+1234
+RECIEVER COMPANYIND,
+RECIEVER COMPANYIND,
+LR Date
+1/7/2017
+intamal Number: 1234
+m00o. INDIA
+m100O, INDIA
+E Way BiR
+Invoice Date 1/7/2017
+invoice Tirec 12:10:59
+Freight Terms:
+Costs, insurance & freight
+Delivery Nurmiber: 8000134664
+Dellvery Terms:
+State Haryana, India
+State Haryana, India
+Delivery Dute: 1/7/2017
+State codet 06
+State code: 06
+Payment Tarms
+Payment within 60 Days
+Purchase Order No. PO1234567
+Telephone
+Telephone
+Purchase Order Date: 1/7/2017
+PAN No. ABBOC9098G
+PAN No.: ABBCC9098G
+DA Number
+Order No. 1234567
+GSTN Not -07AABBC8888G1AZ1
+N0 -07AABBC8888G1AZ1
+DA Data
+1/7/2017
+Place of Supply
+State Name
+Haryana
+State Code:
+06
+S.N
+item
+HSN
+Category Total UO
+Site wise
+Mp
+Disc.
+Dise.
+Basie salling
+COST
+SGSTAUTGST
+IGST
+Invoice
+Description
+CODE
+Ory
+Oty
+C
+per Unit
+1%)
+(INR)
+Price (INR)
+Vale
+PC
+CINRI
+Rate(%) Amt
+Ratel%) Amt
+Rato(%} Amt
+(INRI
+1
+Dummy
+6203
+Bottom
+32/34/2
+2IPC
+1523.04
+0.00
+0.00
+1523.04
+2.50
+38.08
+2.50
+38.08
+0.00
+0.00
+1599.20
+product for
+evaluation
+2
+Dummy
+6203
+Bottom
+32/34/2
+2PC
+1523.04
+0.00
+0.00
+1523.04
+2.50
+38.08
+2.50
+38.08
+0.00
+0.00
+product for
+3599.20
+evaluation
+3
+Dumney
+6203
+Bottom
+32/34/2
+2lPc
+1523.04
+0.00
+0.00
+1523.04
+2.50
+8.08
+2.50
+38.08
+D.00
+0.00
+1599.20
+product for
+evaluation
+$
+4
+Dummy
+6203
+Bottom
+32/34/2
+2PC
+1523.04
+0.00
+0.00
+1523.04
+2.50
+38 .08
+2.50
+product for
+38.08
+0.0o
+0.00
+1599.20
+evaluation
+5
+Dummy
+6203
+Bottom
+32/34/2
+2PC
+1523.04
+0.00
+0.00
+1523.04
+2.50
+38.08
+2.50
+38.08
+0.00
+0.00
+product for
+1599.20
+evaluation
+6
+Dummy
+6203
+Bottom
+32/34/2
+2PC
+1523.04
+0.00
+0.00
+1523.04
+2.50
+38.08
+2.50
+product for
+38.08
+0.00
+0.00
+1599.20
+evaluation
+7
+Durmy
+6203
+Bottom
+32/34/2
+IPC
+1523.04
+0.00
+product for
+0.00
+1523.04
+2.50
+38.08
+2.50
+38.08
+D.00
+0.00
+1599.20
+evaluaton
+B
+Dummy
+6203
+Bottom
+32/34/1
+1
+IPC
+761.52
+0.00
+0.00
+761.62
+2.50
+19.04
+2.50
+19.04
+0.00
+productfor
+0.00
+799.60
+evaluation
+VirtualCompanyind
+Page of 3
+VirtualAddr, 255.0.0.0, India
+Telephone: Email: abc@gmail com
+GSTN No: 0:17ABCDEF123GXYZ 17ABCDEF
+PAN O:AAABB9990A
+CIN:A10002AA1710ALB001995
+Tax Invoice
+Original for Recipient
+Ba To 1700235
+Ship Tot 1700234
+Transporter Name:
+SAFEXPRESS PRIVATE
+lnvoice No IOON
+Custorer Name: RECIEVER COMPANYIND
+Customer Name: RECIEVER COMPANYIND
+UR Number
+1234
+1234
+RECIEVER COMPANYIND
+RECIEVER COMPANYIND
+LR Date:
+1/7/2017
+internal Number 1234
+11000. INDIA
+mooo, INDIA
+E Way BBt:
+invoice Date: 1/7/2017
+invoice Time: 12110:59
+Freight Torms
+Costs. insurance & freight
+Delivery Nombert 80001 134664
+Dolivory Terms:
+State: Haryane, indis
+State: Haryana. lndia
+Delivery Dates 1/7/2017
+State code: 06
+State code 06
+Payment Terms:
+Payment within 60 Days
+Purchase Order No. P01234567
+Telaphons:
+Telephone:
+Purchsoe Order Date 1/7/2017
+PAN No.: ABBCC9098G
+PAN No. ABBCC9098G
+DA Number
+Order No- 1234567
+OSTN No: -07AABBC8888G1AZ1
+GSTN :-07AABBC8888G1AZ1
+DA Dater
+1/7/2017
+Place of Supoly
+State Name:
+Haryana
+State Code:
+06
+S.N
+ham
+HSN
+Category Size wise
+Total
+UO
+Mrp
+Disc.
+Dise.
+Baniic selling
+CGST
+SGSTIUTGST
+IGST
+invoice
+Description
+CODE
+Ory
+Ofy
+C
+per Unit
+(%)
+(INR)
+Price (INRI
+Value
+PC
+CNR)
+Rate(%) Amt
+Rate(%) Amt
+Rate(%) Amt
+CINRI
+9
+Dummy
+6203
+Bottom
+32/34/2
+2 PC
+1523.04
+0.00
+0.00
+1523.04
+2.50
+38.08
+2.50
+38.08
+0.00
+0.00
+1599.20
+product for
+evaluason
+10
+Dummy
+6203
+Bottom
+30/34/2
+2PO
+1523.04
+0.00
+0.00
+1523.04
+2.50
+8.08
+2.50
+38.08
+D.00
+0.00
+1599.20
+product for
+evaluation
+Total
+19
+0.00
+14468.88
+361.76
+361.76
+0.00
+15192.40
+Total lnvoice Amount in words: Fifteen Thousand One Hundred Ninety Two Rupees Ferty Paise Only
+Received the Goods in good constion
+Other Remarks
+Signature with Seal Stamp
+Invoice Summary
+Page 3of 3
+item Category
+Ory.
+Basic seeing
+SGST AMt
+CGST AMI
+IGST AMt
+lnvoice Value
+PicelINiU
+IINRI
+(INRI
+IINR
+(INRI
+Bottom
+19.000
+14468. 88
+361.76
+361.76
+0.00
+15192.40
+Total
+19.00
+14468.8
+361.76
+361.76
+0.00
+15192.40
+Invoice
+Internal
+Invoice Date
+LR No.
+LR Date
+Transporter Name
+No. (ODN)
+Number
+1234
+1234
+1/7/2017
+1234
+1/7/2017
+SAFEXPRESS PRIVATE LIMITED
+Product HSN
+CGST
+SGST
+UGST
+IGST
+Qty
+Net Value
+Tax
+Total
+Category
+Amount
+Jeans
+6203
+361.76
+361.76
+0.00
+0.00
+19
+14,468.88
+723.52
+15,192.40
+2.50
+2.50
+0.00
+0.00
+Grand
+19
+14,468.88
+723.52
+15.192.40
+Total
+-

@@ -1,6 +1,25 @@
 import re
 import os.path
 from os import path
+import pandas as pd
+import re
+import pkg_resources
+import requests
+from symspellpy.symspellpy import SymSpell, Verbosity  # its a spell check library
+max_edit_distance_dictionary = 2
+prefix_length = 7
+# create object
+sym_spell = SymSpell(max_edit_distance_dictionary, prefix_length)
+# load dictionary
+dictionary_path = pkg_resources.resource_filename("symspellpy", "frequency_dictionary_en_82_765.txt")
+bigram_path = pkg_resources.resource_filename("symspellpy", "frequency_bigramdictionary_en_243_342.txt")
+# term_index is the column of the term and count_index is the
+# column of the term frequency
+if not sym_spell.load_dictionary(dictionary_path, term_index=0,count_index=1):
+        print("Dictionary file not found")
+if not sym_spell.load_bigram_dictionary(bigram_path, term_index=0,count_index=2):
+        print("Bigram dictionary file not found")
+
 table1_exists=None
 table2_exists=None
 table3_exists=None
@@ -122,8 +141,92 @@ if(path.exists("table-5.csv")):
 			j=j[1:len(j)-1]
 			new_line.append(j)
 		table5_lines[i]=new_line
-		
-		"""
+df=pd.read_csv('keyValue.csv')
+d={"Seller State":"","Seller ID":"","Seller Name":"","Seller Address":"","Seller GSTIN Number":"","Country of Origin":"","Currency":"","Description":""}
+def seller_state(df):
+    df=df.drop_duplicates()
+    for i in df.index:
+        description=df['key'][i].lower()
+        if(description.find("place of supply")!=-1):
+            print("Seller state:",df['value'][i])
+            d.update({"Seller State":df['value'][i]})
+        elif(isinstance(df['value'][i],str)):
+            description=df['value'][i].lower()
+            if(description.find("place of supply")!=-1):
+                d.update({"Seller State":description.split("place of supply",1)[1]})
+def seller_id(text_file_lines):
+    for i in text_file_lines:
+        i=i.lower()
+        if('cin' in i):
+            found=i.find(":")
+            if(found!=-1):
+                d.update({"Seller ID":i.split(":")[1].replace("\n",'').strip(' ').strip("-")})
+            else:
+                found=i.find(".")
+                if(found!=-1):
+                    d.update({"Seller ID":i.split(".")[1].replace("\n",'').strip(' ').strip("-")})
+            break
+def seller_gst(text_file_lines):
+    nxt_line=0
+    for i in text_file_lines:
+        i=i.lower()
+        if(nxt_line):
+            Gst_no=i.strip("\n").strip(" ")
+            if(Gst_no.isalnum() and len(Gst_no)==15):
+                d.update({"Seller GSTIN Number":Gst_no.replace("-","")})
+            break
+        if('gst' in i):
+            found=i.find(":")
+            if(found!=-1):
+                Gst_no=i.split(":")[1].strip("\n").strip(" ")
+                if(Gst_no.isalnum() and len(Gst_no)==15):
+                    d.update({"Seller GSTIN Number":Gst_no.replace("-","")})
+                break
+            else:
+                found=i.find(".")
+                if(found!=-1):
+                    Gst_no=i.split(".")[1].strip("\n").strip(" ")
+                    if(Gst_no.isalnum() and len(Gst_no)==15):
+                        d.update({"Seller GSTIN Number":Gst_no.replace("-","")})
+                    break
+                else:
+                    nxt_line=1
+def currency(text_file_lines):
+    for i in text_file_lines:
+        i=i.lower()
+        if("currency" in i):
+            found=i.find(":")
+            if(found!=-1):
+                d.update({"Currency":i.split(":")[1].strip(" ").strip("-").replace("\n","")})
+                break
+        if(("inr" in i) or ("rupees" in i)):
+            d.update({"Currency":"INR"})
+            break
+def country_of_origin(text_file_lines):
+    f=1
+    dict_of_currencies={'INR':'INDIA'}
+    for i in text_file_lines:
+        i=i.lower()
+        if("country of origin" in i):
+            found=i.find(":")
+            if(found!=-1):
+                d.update({"Country of Origin":i.split(":")[1].strip(" ").strip("-").replace("\n","").replace("/","")})
+                f=0
+                break
+    if(f):
+        d.update({"Country of Origin":dict_of_currencies[d['Currency']]})
+def address(text_file_lines):
+    for i in text_file_lines:        
+        if(i.count(",")>1):
+            d.update({"Seller Address":i.strip("\n")})
+            break
+seller_id(text_file_lines)
+seller_gst(text_file_lines)
+currency(text_file_lines)
+country_of_origin(text_file_lines)
+address(text_file_lines)
+seller_state(df)
+"""
 Problem number 1: finding the invoice number
 Case 1: When the invoice number is present in the keyValue pair file
 	becomes very easy
