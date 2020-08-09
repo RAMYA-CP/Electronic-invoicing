@@ -1,4 +1,4 @@
-String document="input.png";
+String document="Sample_Invoice_1.pdf";
 String bucket="bucket";
 
 AmazonTextract client = AmazonTextractClientBuilder.defaultClient();
