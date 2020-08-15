@@ -10,9 +10,9 @@ This is not serviceable for the type of information we need to extract. Along wi
 The Amazon Textract Text Detection API can detect text in a variety of documents including financial reports, medical records, and tax forms. For documents with structured data, the Amazon Textract Document Analysis API can be easily used to extract text, forms and tables. The only prerequisite for utilizing their API is the requirement of an AWS account. However, this seemed a minor requirement considering their unparalleled accuracy and speed with other open source solutions. 
 
 **To use the AWS API, the user must:-**
-Create an AWS account
-Create an IAM User
-Set up AWS CLI and SDK
+* Create an AWS account
+* Create an IAM User
+* Set up AWS CLI and SDK
 
 Amazon Textract can detect and analyze text in single-page documents that are provided as images in JPEG, PNG or PDF format. The operations are synchronous and return results in near real time. 
 Calling Amazon textract operations [Refer load.txt]
