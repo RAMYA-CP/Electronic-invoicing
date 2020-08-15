@@ -1,4 +1,4 @@
-# **Electronic Invoicing using Image Processing 
+# Electronic Invoicing using Image Processing 
 
 This solution tackles the cumbersome process of manual electronic invoicing by introducing Image Processing. 
 
