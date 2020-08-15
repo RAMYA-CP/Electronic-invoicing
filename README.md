@@ -1,6 +1,6 @@
 # Electronic Invoicing using Image Processing 
 
-This solution tackles the cumbersome process of manual electronic invoicing by introducing Image Processing. 
+This solution tackles the cumbersome process of manual electronic invoicing by introducing Image Processing,OCR, Machine Learning and word-association algorithms. 
 
 ## **OCR**
 
